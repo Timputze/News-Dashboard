@@ -1,18 +1,10 @@
 import streamlit as st
 import psycopg2
 import pandas as pd
+import os
 
-# =========================
-# CONFIG
-# =========================
+DATABASE_URL = os.getenv("DATABASE_URL")
 
-DB_CONFIG = {
-    "host": "localhost",
-    "port": 5432,
-    "dbname": "digital_identity_news",
-    "user": "postgres",
-    "password": "password"
-}
 
 # =========================
 # LOAD DATA
@@ -20,7 +12,7 @@ DB_CONFIG = {
 
 @st.cache_data
 def load_data():
-    conn = psycopg2.connect(**DB_CONFIG)
+    conn = psycopg2.connect(DATABASE_URL)
     query = """
         SELECT title, link, source, score, published_at
         FROM news_articles
