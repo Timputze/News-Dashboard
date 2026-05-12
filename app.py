@@ -57,7 +57,7 @@ for _, row in filtered_df.iterrows():
     st.markdown(f"**{row['link']}**")
     st.write(f"Source: {row['source']} | Score: {row['score']} | Date: {row['published_at']}")
     st.write("---")
-=======
+
 import streamlit as st
 import psycopg2
 import pandas as pd
