@@ -9,7 +9,7 @@ from langdetect import detect, LangDetectException
 # CONFIG
 # =========================================================
 
-DB_CONFIG = "postgresql://neondb_owner:npg_ORFd0pJDw3tG@ep-delicate-unit-alea8c7k-pooler.c-3.eu-central-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require"
+DB_CONFIG = "postgresql://neondb_owner:npg_x4QdcKiasG7y@ep-delicate-unit-alea8c7k-pooler.c-3.eu-central-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require"
 
 NOW = datetime.now()
 CUTOFF_DAYS = 30
