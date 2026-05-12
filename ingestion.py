@@ -4,12 +4,13 @@ import feedparser
 import psycopg
 from datetime import datetime, timedelta
 from langdetect import detect, LangDetectException
+import os
 
 # =========================================================
 # CONFIG
 # =========================================================
 
-DB_CONFIG = "postgresql://neondb_owner:npg_x4QdcKiasG7y@ep-delicate-unit-alea8c7k-pooler.c-3.eu-central-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require"
+DB_CONFIG = os.getenv("DATABASE_URL")
 
 NOW = datetime.now()
 CUTOFF_DAYS = 30
