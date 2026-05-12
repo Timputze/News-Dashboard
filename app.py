@@ -38,7 +38,7 @@ df = load_data()
 
 st.title("📰 Digital Identity Radar")
 st.caption("Curated insights on eIDAS, EUDI Wallet & Digital Identity")
-
+st.caption(f"Last updated: {pd.Timestamp.now().strftime('%Y-%m-%d %H:%M')}")
 # =========================
 # SIDEBAR
 # =========================
