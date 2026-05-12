@@ -12,7 +12,7 @@ st.set_page_config(
 # DB
 # =========================
 
-DATABASE_URL = "postgresql://neondb_owner:npg_x4QdcKiasG7y@ep-delicate-unit-alea8c7k-pooler.c-3.eu-central-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require"
+DATABASE_URL = os.getenv("DATABASE_URL")
 
 # =========================
 # LOAD DATA
