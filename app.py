@@ -4,7 +4,7 @@ import pandas as pd
 import os
 
 st.set_page_config(
-    page_title="Identity Radar",
+    page_title="Digital Identity Radar",
     layout="wide"
 )
 
