@@ -12,9 +12,7 @@ import os
 
 DATABASE_URL = os.getenv("DATABASE_URL")
 
-NOW = datetime.now()
-CUTOFF_DAYS = 30
-CUTOFF_DATE = NOW - timedelta(days=CUTOFF_DAYS)
+NOW = datetime.utcnow()
 CURRENT_YEAR = NOW.year
 
 # =========================================================
@@ -22,37 +20,30 @@ CURRENT_YEAR = NOW.year
 # =========================================================
 
 RSS_FEEDS = [
-    # --- Google News ---
     "https://news.google.com/rss/search?q=eIDAS+Digital+Identity+Wallet&hl=en-DE&gl=DE&ceid=DE:en",
     "https://news.google.com/rss/search?q=European+Digital+Identity+Wallet&hl=en-DE&gl=DE&ceid=DE:en",
     "https://news.google.com/rss/search?q=digitale+Identit%C3%A4t+EU&hl=de&gl=DE&ceid=DE:de",
 
-    # --- EU Institutions ---
     "https://digital-strategy.ec.europa.eu/en/news/rss.xml",
     "https://ec.europa.eu/commission/presscorner/api/rss?language=en",
     "https://www.enisa.europa.eu/newsroom/news/RSS",
     "https://www.consilium.europa.eu/en/press/press-releases/rss.xml",
 
-    # --- German federal ---
     "https://www.bmi.bund.de/SiteGlobals/Functions/RSSFeed/RSSNews/RSSNews.xml",
     "https://www.bsi.bund.de/SiteGlobals/Functions/RSSFeed/RSSNews/RSSNews.xml",
     "https://www.bmwk.de/SiteGlobals/Functions/RSSFeed/RSSNews/RSSNews.xml",
 
-    # --- GovTech ---
     "https://www.govtech.com/rss",
     "https://www.oeffentliche-it.de/rss.xml",
 
-    # --- Policy media ---
     "https://www.euractiv.com/section/digital/feed/",
     "https://www.politico.eu/rss/digital/",
     "https://www.politico.eu/rss/technology/",
     "https://www.ft.com/europe?format=rss",
 
-    # --- Cyber ---
     "https://www.darkreading.com/rss_simple.asp",
     "https://www.infosecurity-magazine.com/rss/news/",
 
-    # --- German press ---
     "https://netzpolitik.org/feed/",
     "https://www.handelsblatt.com/contentexport/feed/inside-digital",
 
@@ -64,10 +55,8 @@ RSS_FEEDS = [
     "https://www.t-online.de/rss",
     "https://www.express.de/rss",
 
-    # --- Industry ---
     "https://www.bitkom.org/service/rss-feed",
 
-    # --- LinkedIn ---
     "https://rss.app/feeds/SU0226316SotG2Ur.xml",
     "https://rss.app/feeds/mIvPBhCGQ8s8bsfc.xml",
     "https://rss.app/feeds/rbQ9pA1KN68TwFWE.xml",
@@ -76,7 +65,7 @@ RSS_FEEDS = [
 ]
 
 # =========================================================
-# KEYWORDS (shortened for clarity, keep yours if needed)
+# KEYWORDS
 # =========================================================
 
 KEYWORDS = [
@@ -132,9 +121,6 @@ for feed_url in RSS_FEEDS:
         if not published_at:
             continue
 
-        if published_at < CUTOFF_DATE:
-            continue
-
         if published_at.year < CURRENT_YEAR:
             continue
 
@@ -154,7 +140,7 @@ for feed_url in RSS_FEEDS:
 with psycopg.connect(DATABASE_URL) as conn:
     with conn.cursor() as cur:
 
-        # ✅ 1. Ensure table exists
+        # 1. Ensure table exists
         cur.execute("""
             CREATE TABLE IF NOT EXISTS news_articles (
                 id SERIAL PRIMARY KEY,
@@ -167,15 +153,15 @@ with psycopg.connect(DATABASE_URL) as conn:
             )
         """)
 
-        # ✅ 2. DELETE old articles (30 days)
+        # ✅ 2. CLEANUP (robust, DB-side)
         cur.execute("""
             DELETE FROM news_articles
-            WHERE published_at < %s
-        """, (CUTOFF_DATE,))
+            WHERE published_at < NOW() - INTERVAL '30 days'
+        """)
 
         deleted_rows = cur.rowcount
 
-        # ✅ 3. Insert new articles
+        # 3. Insert new articles
         inserted = 0
 
         for a in articles:
