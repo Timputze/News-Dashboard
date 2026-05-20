@@ -12,7 +12,7 @@ import os
 
 DATABASE_URL = os.getenv("DATABASE_URL")
 
-NOW = datetime.utcnow()
+NOW = datetime.now()
 CURRENT_YEAR = NOW.year
 
 # =========================================================
