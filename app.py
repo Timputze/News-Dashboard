@@ -15,34 +15,14 @@ st.set_page_config(
 DATABASE_URL = os.getenv("DATABASE_URL")
 
 # =========================
-# TOPIC DEFINITIONS
+# LOAD DATA (NO STALE CACHE)
 # =========================
 
-TOPICS = {
-    "eIDAS / Regulation": ["eidas", "regulation", "trust services"],
-    "EUDI Wallet": ["wallet", "eudi", "digital identity wallet"],
-    "Age Verification": ["age verification", "altersverifikation"],
-    "Public Sector": ["ozg", "bsi", "bund", "government"],
-    "Security": ["pki", "encryption", "security"],
-    "Adoption & Usage": ["adoption", "usage", "activation"]
-}
-
-def assign_topic(title):
-    title = title.lower()
-    for topic, keywords in TOPICS.items():
-        if any(k in title for k in keywords):
-            return topic
-    return "Other"
-
-# =========================
-# LOAD DATA
-# =========================
-
-@st.cache_data
+@st.cache_data(ttl=300)  # refresh every 5 minutes
 def load_data():
     conn = psycopg2.connect(DATABASE_URL)
     query = """
-        SELECT title, link, source, score, published_at
+        SELECT title, link, source, score, published_at, load_timestamp
         FROM news_articles
         ORDER BY published_at DESC
     """
@@ -52,8 +32,8 @@ def load_data():
 
 df = load_data()
 
-# ✅ add topic column
-df["topic"] = df["title"].apply(assign_topic)
+# ✅ REAL last update from DB
+last_update = df["load_timestamp"].max()
 
 # =========================
 # HEADER
@@ -61,19 +41,13 @@ df["topic"] = df["title"].apply(assign_topic)
 
 st.title("📰 Digital Identity Radar")
 st.caption("Curated insights on eIDAS, EUDI Wallet & Digital Identity")
-st.caption(f"Last updated: {pd.Timestamp.now().strftime('%Y-%m-%d %H:%M')}")
+st.caption(f"Last ingestion run: {last_update}")
 
 # =========================
 # SIDEBAR
 # =========================
 
 st.sidebar.title("Filters")
-
-selected_topics = st.sidebar.multiselect(
-    "Topic",
-    options=sorted(df["topic"].unique()),
-    default=df["topic"].unique()
-)
 
 min_score = st.sidebar.slider(
     "Minimum relevance",
@@ -89,7 +63,6 @@ search_term = st.sidebar.text_input("Search")
 # =========================
 
 filtered_df = df[
-    (df["topic"].isin(selected_topics)) &
     (df["score"] >= min_score)
 ]
 
@@ -105,7 +78,7 @@ if search_term:
 col1, col2, col3 = st.columns(3)
 
 col1.metric("Articles", len(filtered_df))
-col2.metric("Topics", filtered_df["topic"].nunique())
+col2.metric("Sources", filtered_df["source"].nunique())
 col3.metric("Avg Score", round(filtered_df["score"].mean(), 1))
 
 st.divider()
@@ -124,7 +97,7 @@ for _, row in top_df.iterrows():
 
         with col1:
             st.markdown(f"**{row['title']}**")
-            st.caption(f"{row['topic']} • {row['source']} • {row['published_at'].date()} • Score: {row['score']}")
+            st.caption(f"{row['source']} • {row['published_at'].date()} • Score: {row['score']}")
 
         with col2:
             st.link_button("Open", row["link"])
@@ -143,7 +116,7 @@ for _, row in filtered_df.iterrows():
 
         with col1:
             st.write(row["title"])
-            st.caption(f"{row['topic']} • {row['source']} • Score: {row['score']} • {row['published_at'].date()}")
+            st.caption(f"{row['source']} • Score: {row['score']} • {row['published_at'].date()}")
 
         with col2:
             st.link_button("Open", row["link"])
