@@ -15,6 +15,26 @@ st.set_page_config(
 DATABASE_URL = os.getenv("DATABASE_URL")
 
 # =========================
+# TOPIC DEFINITIONS
+# =========================
+
+TOPICS = {
+    "eIDAS / Regulation": ["eidas", "regulation", "trust services"],
+    "EUDI Wallet": ["wallet", "eudi", "digital identity wallet"],
+    "Age Verification": ["age verification", "altersverifikation"],
+    "Public Sector": ["ozg", "bsi", "bund", "government"],
+    "Security": ["pki", "encryption", "security"],
+    "Adoption & Usage": ["adoption", "usage", "activation"]
+}
+
+def assign_topic(title):
+    title = title.lower()
+    for topic, keywords in TOPICS.items():
+        if any(k in title for k in keywords):
+            return topic
+    return "Other"
+
+# =========================
 # LOAD DATA
 # =========================
 
@@ -32,6 +52,9 @@ def load_data():
 
 df = load_data()
 
+# ✅ add topic column
+df["topic"] = df["title"].apply(assign_topic)
+
 # =========================
 # HEADER
 # =========================
@@ -39,16 +62,17 @@ df = load_data()
 st.title("📰 Digital Identity Radar")
 st.caption("Curated insights on eIDAS, EUDI Wallet & Digital Identity")
 st.caption(f"Last updated: {pd.Timestamp.now().strftime('%Y-%m-%d %H:%M')}")
+
 # =========================
 # SIDEBAR
 # =========================
 
 st.sidebar.title("Filters")
 
-selected_source = st.sidebar.multiselect(
-    "Source",
-    options=sorted(df["source"].unique()),
-    default=df["source"].unique()
+selected_topics = st.sidebar.multiselect(
+    "Topic",
+    options=sorted(df["topic"].unique()),
+    default=df["topic"].unique()
 )
 
 min_score = st.sidebar.slider(
@@ -65,7 +89,7 @@ search_term = st.sidebar.text_input("Search")
 # =========================
 
 filtered_df = df[
-    (df["source"].isin(selected_source)) &
+    (df["topic"].isin(selected_topics)) &
     (df["score"] >= min_score)
 ]
 
@@ -81,7 +105,7 @@ if search_term:
 col1, col2, col3 = st.columns(3)
 
 col1.metric("Articles", len(filtered_df))
-col2.metric("Sources", filtered_df["source"].nunique())
+col2.metric("Topics", filtered_df["topic"].nunique())
 col3.metric("Avg Score", round(filtered_df["score"].mean(), 1))
 
 st.divider()
@@ -100,7 +124,7 @@ for _, row in top_df.iterrows():
 
         with col1:
             st.markdown(f"**{row['title']}**")
-            st.caption(f"{row['source']} • {row['published_at'].date()} • Score: {row['score']}")
+            st.caption(f"{row['topic']} • {row['source']} • {row['published_at'].date()} • Score: {row['score']}")
 
         with col2:
             st.link_button("Open", row["link"])
@@ -119,7 +143,7 @@ for _, row in filtered_df.iterrows():
 
         with col1:
             st.write(row["title"])
-            st.caption(f"{row['source']} • Score: {row['score']} • {row['published_at'].date()}")
+            st.caption(f"{row['topic']} • {row['source']} • Score: {row['score']} • {row['published_at'].date()}")
 
         with col2:
             st.link_button("Open", row["link"])
