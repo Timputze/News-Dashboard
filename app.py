@@ -50,7 +50,7 @@ if pd.notna(last_update):
     last_update = last_update.strftime("%Y-%m-%d %H:%M")
 
 st.title("📰 Digital Identity Radar")
-st.caption(f"Last ingestion run: {last_update}")
+st.caption(f"Last Article Posted: {last_update}")
 
 # FILTER
 selected_topics = st.sidebar.multiselect(
