@@ -1,6 +1,6 @@
-📰 Digital Identity News Dashboard
+📰 Enterprise Model and Strategy News Dashboard
 
-This project is an automated news intelligence tool focused on digital identity topics such as eIDAS, EUDI Wallet, and EU digital policy.
+This project is an automated news intelligence tool focused on the EM&S team.
 It collects articles from curated sources, filters them based on relevance, stores them in a PostgreSQL database, and presents them in an interactive Streamlit dashboard.
 
 
