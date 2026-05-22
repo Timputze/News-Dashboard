@@ -69,27 +69,77 @@ RSS_FEEDS = [
 # =========================
 
 KEYWORDS = [
-    "enterprise model",
-    "operating model",
-    "business model",
-    "target operating model",
-    "growth strategy",
-    "market expansion",
-    "cost optimization",
+    # =========================
+    # STRATEGY SIGNALS
+    # =========================
+    "strategy",
+    "strategic",
+    "plans",
+    "roadmap",
+    "transformation",
+    "restructuring",
+    "reorganization",
+    "expansion",
+    "growth",
+    "turnaround",
+
+    # =========================
+    # FINANCIAL / PERFORMANCE
+    # =========================
+    "cost",
+    "cost cuts",
+    "cost reduction",
     "efficiency",
-    "productivity",
-    "digital transformation",
-    "AI strategy",
-    "AI",
+    "profit",
+    "margin",
+    "earnings",
+    "revenue",
+    "performance",
+    "results",
+
+    # =========================
+    # OPERATIONS / BUSINESS
+    # =========================
+    "operations",
     "supply chain",
     "logistics",
-    "margin optimization",
-    "organizational design",
-    "governance",
-    "service delivery model",
-    "kpi",
-    "performance",
+    "production",
+    "manufacturing",
+    "delivery",
+    "service",
+    "process",
+
+    # =========================
+    # DIGITAL / TRANSFORMATION
+    # =========================
+    "digital",
+    "technology",
+    "AI",
+    "automation",
+    "platform",
+    "innovation",
+
+    # =========================
+    # ORG / MANAGEMENT SIGNALS
+    # =========================
+    "CEO",
+    "management",
+    "leadership",
+    "organization",
+    "division",
+    "unit",
+
+    # =========================
+    # INDUSTRY SIGNALS
+    # =========================
+    "market",
+    "competition",
+    "industry",
+    "customers",
+    "demand",
+    "supply"
 ]
+
 
 # =========================
 # HELPERS
