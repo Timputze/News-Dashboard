@@ -15,42 +15,54 @@ CURRENT_YEAR = NOW.year
 
 # FEEDS
 RSS_FEEDS = [
-    # LBBW
-    "https://www.lbbw-am.de/news/",
-    "https://www.lbbw.de/group/news-and-service/media-center/media-center/media-center_7vvkby89r_e.html",
+    # =========================
+    # GOOGLE NEWS – CLIENT SPECIFIC
+    # =========================
 
-    # BA
-    "https://www.arbeitsagentur.de/presse",
-    "https://www.arbeitsagentur.de/en/press/press-archive",
+    # LBBW
+    "https://news.google.com/rss/search?q=LBBW+bank&hl=en-DE&gl=DE&ceid=DE:en",
+
+    # Bundesagentur für Arbeit
+    "https://news.google.com/rss/search?q=Bundesagentur+für+Arbeit&hl=de&gl=DE&ceid=DE:de",
 
     # BMW
-    "https://www.press.bmwgroup.com/global",
-    "http://feeds.feedburner.com/BmwBlog",
+    "https://news.google.com/rss/search?q=BMW+strategy+company&hl=en-DE&gl=DE&ceid=DE:en",
 
     # Daimler Truck
-    "https://www.daimlertruck.com/en/newsroom",
-    "http://www.daimler.igm.de/feed/news.xml",
+    "https://news.google.com/rss/search?q=Daimler+Truck+strategy&hl=en-DE&gl=DE&ceid=DE:en",
 
     # E.ON
-    "https://news.eonenergy.com/news/",
-    "https://www.eon.com/en/about-us/media/press-release.html",
+    "https://news.google.com/rss/search?q=E.ON+energy+strategy&hl=en-DE&gl=DE&ceid=DE:en",
 
     # Aldi
-    "https://corporate.aldi.us/newsroom",
-    "https://www.aldipresscentre.co.uk/",
+    "https://news.google.com/rss/search?q=Aldi+strategy+retail&hl=en-DE&gl=DE&ceid=DE:en",
 
     # Capgemini
-    "https://capgemini.com/feed",
-    "https://www.capgemini.com/news/press-releases/",
+    "https://news.google.com/rss/search?q=Capgemini+consulting+strategy&hl=en-DE&gl=DE&ceid=DE:en",
 
     # ZF
+    "https://news.google.com/rss/search?q=ZF+Group+automotive+strategy&hl=en-DE&gl=DE&ceid=DE:en",
+
+    # =========================
+    # CLIENT DIRECT SOURCES
+    # =========================
+    "https://www.lbbw-am.de/news/",
+    "https://www.arbeitsagentur.de/presse",
+    "http://feeds.feedburner.com/BmwBlog",
+    "http://www.daimler.igm.de/feed/news.xml",
+    "https://news.eonenergy.com/news/",
+    "https://www.aldipresscentre.co.uk/",
+    "https://capgemini.com/feed",
     "https://press.zf.com",
 
-    # General
+    # =========================
+    # BACKUP BUSINESS SOURCES
+    # =========================
     "https://feeds.reuters.com/reuters/businessNews",
-    "https://feeds.bbci.co.uk/news/world/rss.xml",
-    "https://www.handelsblatt.com/contentexport/feed/schlagzeilen",
+    "https://feeds.bbci.co.uk/news/business/rss.xml",
+    "https://www.handelsblatt.com/contentexport/feed/schlagzeilen"
 ]
+
 
 # =========================
 # KEYWORDS
