@@ -60,8 +60,21 @@ RSS_FEEDS = [
     # =========================
     "https://feeds.reuters.com/reuters/businessNews",
     "https://feeds.bbci.co.uk/news/business/rss.xml",
-    "https://www.handelsblatt.com/contentexport/feed/schlagzeilen"
+    "https://www.handelsblatt.com/contentexport/feed/schlagzeilen",
+
+    # =========================
+    # LinkedIn
+    # =========================
+    "https://rss.app/rss-feed?url=https://www.linkedin.com/company/lbbw",
+    "https://rss.app/rss-feed?url=https://www.linkedin.com/company/bundesagentur-fuer-arbeit",
+    "https://rss.app/rss-feed?url=https://www.linkedin.com/company/bmw-group",
+    "https://rss.app/rss-feed?url=https://www.linkedin.com/company/daimler-truck-ag",
+    "https://rss.app/rss-feed?url=https://www.linkedin.com/company/eon",
+    "https://rss.app/rss-feed?url=https://www.linkedin.com/company/aldi",
+    "https://rss.app/rss-feed?url=https://www.linkedin.com/company/capgemini",
+    "https://rss.app/rss-feed?url=https://www.linkedin.com/company/zf-group"
 ]
+
 
 
 # =========================
