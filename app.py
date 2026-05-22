@@ -80,7 +80,9 @@ filtered = df[
 col1, col2, col3 = st.columns(3)
 col1.metric("Articles", len(filtered))
 col2.metric("Clients", filtered["topic"].nunique())
-col3.metric("Avg Score", round(filtered["score"].mean(), 1))
+col3.metric("Average Score", round(filtered["score"].mean(), 1))
+
+st.caption("Score is the amount of keywords found per article.")
 
 st.divider()
 
