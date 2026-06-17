@@ -16,29 +16,24 @@ TOPICS = {
         "eidas", "regulation", "trust services",
         "verordnung", "eu-verordnung", "digitale identität eu"
     ],
-
     "EUDI Wallet": [
         "wallet", "eudi", "digital identity wallet",
         "digitale brieftasche", "eudi wallet", "identity wallet"
     ],
-
     "Age Verification": [
         "age verification", "altersverifikation",
         "altersprüfung", "jugendschutz"
     ],
-
     "Public Sector": [
         "ozg", "bsi", "bund", "government",
         "verwaltung", "behörde", "ministerium",
         "onlinezugangsgesetz", "registermodernisierung"
     ],
-
     "Security": [
         "pki", "encryption", "security",
         "sicherheit", "verschlüsselung",
         "cybersecurity", "it-sicherheit"
     ],
-
     "Adoption & Usage": [
         "adoption", "usage", "activation",
         "nutzung", "einführung", "verbreitung",
@@ -53,6 +48,9 @@ def assign_topic(title):
             return topic
     return "Other"
 
+# =========================
+# LOAD DATA
+# =========================
 
 @st.cache_data(ttl=300)
 def load_data():
@@ -64,20 +62,29 @@ def load_data():
     conn.close()
     return df
 
-
 df = load_data()
 df["topic"] = df["title"].apply(assign_topic)
 
-last_update = df["load_timestamp"].max()
-last_update = last_update.strftime("%Y-%m-%d %H:%M")
+last_update = df["load_timestamp"].max().strftime("%Y-%m-%d %H:%M")
 
 # =========================
-# UI
+# HEADER
 # =========================
 
 st.title("📰 Digital Identity News Scanner")
 st.caption("Curated insights on eIDAS, EUDI Wallet & Digital Identity")
-st.caption(f"Last ingestion run: {last_update}")
+
+colA, colB = st.columns([3, 1])
+colA.caption(f"Last ingestion run: {last_update}")
+colB.success("● Live")
+
+st.markdown(" ")
+
+# =========================
+# SIDEBAR
+# =========================
+
+st.sidebar.header("🔎 Filters")
 
 selected_topics = st.sidebar.multiselect(
     "Topics",
@@ -92,7 +99,14 @@ min_score = st.sidebar.slider(
     1
 )
 
-search_term = st.sidebar.text_input("Search (title or keywords)")
+search_term = st.sidebar.text_input("Search")
+
+st.sidebar.markdown("---")
+st.sidebar.caption("Auto-refresh every 5 min")
+
+# =========================
+# FILTERING
+# =========================
 
 filtered = df[
     (df["topic"].isin(selected_topics)) &
@@ -106,41 +120,95 @@ if search_term:
     ]
 
 # =========================
-# KPI
+# KPI (cleaner style)
 # =========================
 
 col1, col2, col3 = st.columns(3)
-col1.metric("Articles", len(filtered))
-col2.metric("Topics", filtered["topic"].nunique())
-col3.metric("Average Score", round(filtered["score"].mean(), 1))
 
-st.caption("Score is the amount of keywords found per article.")
+with col1:
+    st.markdown("### 📰 Articles")
+    st.markdown(f"## {len(filtered)}")
+
+with col2:
+    st.markdown("### 🧩 Topics")
+    st.markdown(f"## {filtered['topic'].nunique()}")
+
+with col3:
+    st.markdown("### ⭐ Avg Score")
+    avg_score = round(filtered["score"].mean(), 1) if len(filtered) > 0 else 0
+    st.markdown(f"## {avg_score}")
+
+st.caption("Score = number of keyword matches per article")
 
 st.divider()
+
+# =========================
+# GLASS CARD FUNCTION
+# =========================
+
+def render_card(title, topic, source, score, link, keywords):
+    st.markdown(f"""
+    <div style="
+        padding:18px;
+        border-radius:14px;
+        background: rgba(255,255,255,0.04);
+        backdrop-filter: blur(8px);
+        border: 1px solid rgba(255,255,255,0.08);
+        margin-bottom:12px;
+    ">
+        <div style="font-size:16px; font-weight:600;">
+            {title}
+        </div>
+
+        <div style="font-size:12px; opacity:0.7; margin-top:6px;">
+            {topic} • {source} • Score {score}
+        </div>
+
+        <div style="font-size:12px; opacity:0.6; margin-top:6px;">
+            {keywords}
+        </div>
+
+        <div style="margin-top:10px;">
+            {link}
+                🔗 Open Article
+            </a>
+        </div>
+    </div>
+    """, unsafe_allow_html=True)
 
 # =========================
 # TOP ARTICLES
 # =========================
 
-st.subheader("🔥 Top 5 Articles")
+st.markdown("## 🔥 Top Articles")
+st.caption("Highest relevance based on keyword density")
 
 top_df = filtered.sort_values(by="score", ascending=False).head(5)
 
 for _, row in top_df.iterrows():
-    st.markdown(f"**{row['title']}**")
-    st.caption(f"{row['topic']} | {row['source']} | Score {row['score']}")
-    st.caption(f"Keywords: {row['keywords']}")
-    st.link_button("Open", row["link"])
-    st.divider()
+    render_card(
+        row["title"],
+        row["topic"],
+        row["source"],
+        row["score"],
+        row["link"],
+        row["keywords"]
+    )
+
+st.divider()
 
 # =========================
 # ALL ARTICLES
 # =========================
 
-st.subheader("All Articles")
+st.markdown("## 🗂️ All Articles")
 
 for _, row in filtered.iterrows():
-    st.write(row["title"])
-    st.caption(f"{row['topic']} | {row['source']} | Score {row['score']}")
-    st.link_button("Open", row["link"])
-    st.divider()
+    render_card(
+        row["title"],
+        row["topic"],
+        row["source"],
+        row["score"],
+        row["link"],
+        row["keywords"]
+    )
