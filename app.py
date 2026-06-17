@@ -148,33 +148,34 @@ st.divider()
 
 def render_card(title, topic, source, score, link, keywords):
     st.markdown(f"""
-    <div style="
-        padding:18px;
-        border-radius:14px;
-        background: rgba(255,255,255,0.04);
-        backdrop-filter: blur(8px);
-        border: 1px solid rgba(255,255,255,0.08);
-        margin-bottom:12px;
-    ">
-        <div style="font-size:16px; font-weight:600;">
-            {title}
-        </div>
+    {link}
+        <div style="
+            padding:18px;
+            border-radius:14px;
+            background: rgba(255,255,255,0.04);
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(255,255,255,0.08);
+            margin-bottom:12px;
+        ">
+            <div style="font-size:16px; font-weight:600;">
+                {title}
+            </div>
 
-        <div style="font-size:12px; opacity:0.7; margin-top:6px;">
-            {topic} • {source} • Score {score}
-        </div>
+            <div style="font-size:12px; opacity:0.7; margin-top:6px;">
+                {topic} • {source} • Score {score}
+            </div>
 
-        <div style="font-size:12px; opacity:0.6; margin-top:6px;">
-            {keywords}
-        </div>
+            <div style="font-size:12px; opacity:0.6; margin-top:6px;">
+                {keywords}
+            </div>
 
-        <div style="margin-top:10px;">
-            {link}
+            <div style="margin-top:10px; font-size:12px; opacity:0.8;">
                 🔗 Open Article
-            </a>
+            </div>
         </div>
-    </div>
+    </a>
     """, unsafe_allow_html=True)
+
 
 # =========================
 # TOP ARTICLES
