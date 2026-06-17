@@ -13,144 +13,56 @@ CUTOFF_DAYS = 30
 CUTOFF_DATE = NOW - timedelta(days=CUTOFF_DAYS)
 CURRENT_YEAR = NOW.year
 
-# FEEDS
 RSS_FEEDS = [
-    # =========================
-    # GOOGLE NEWS – CLIENT SPECIFIC
-    # =========================
+    "https://news.google.com/rss/search?q=eIDAS+Digital+Identity+Wallet&hl=en-DE&gl=DE&ceid=DE:en",
+    "https://news.google.com/rss/search?q=European+Digital+Identity+Wallet&hl=en-DE&gl=DE&ceid=DE:en",
+    "https://news.google.com/rss/search?q=digitale+Identit%C3%A4t+EU&hl=de&gl=DE&ceid=DE:de",
 
-    # LBBW
-    "https://news.google.com/rss/search?q=LBBW+bank&hl=en-DE&gl=DE&ceid=DE:en",
+    "https://digital-strategy.ec.europa.eu/en/news/rss.xml",
+    "https://ec.europa.eu/commission/presscorner/api/rss?language=en",
+    "https://www.enisa.europa.eu/newsroom/news/RSS",
+    "https://www.consilium.europa.eu/en/press/press-releases/rss.xml",
 
-    # Bundesagentur für Arbeit
-    "https://news.google.com/rss/search?q=Bundesagentur+für+Arbeit&hl=de&gl=DE&ceid=DE:de",
+    "https://www.bmi.bund.de/SiteGlobals/Functions/RSSFeed/RSSNews/RSSNews.xml",
+    "https://www.bsi.bund.de/SiteGlobals/Functions/RSSFeed/RSSNews/RSSNews.xml",
+    "https://www.bmwk.de/SiteGlobals/Functions/RSSFeed/RSSNews/RSSNews.xml",
 
-    # BMW
-    "https://news.google.com/rss/search?q=BMW+strategy+company&hl=en-DE&gl=DE&ceid=DE:en",
+    "https://www.govtech.com/rss",
+    "https://www.oeffentliche-it.de/rss.xml",
 
-    # Daimler Truck
-    "https://news.google.com/rss/search?q=Daimler+Truck+strategy&hl=en-DE&gl=DE&ceid=DE:en",
+    "https://www.euractiv.com/section/digital/feed/",
+    "https://www.politico.eu/rss/digital/",
+    "https://www.politico.eu/rss/technology/",
+    "https://www.ft.com/europe?format=rss",
 
-    # E.ON
-    "https://news.google.com/rss/search?q=E.ON+energy+strategy&hl=en-DE&gl=DE&ceid=DE:en",
+    "https://www.darkreading.com/rss_simple.asp",
+    "https://www.infosecurity-magazine.com/rss/news/",
 
-    # Aldi
-    "https://news.google.com/rss/search?q=Aldi+strategy+retail&hl=en-DE&gl=DE&ceid=DE:en",
+    "https://netzpolitik.org/feed/",
+    "https://www.handelsblatt.com/contentexport/feed/inside-digital",
 
-    # Capgemini
-    "https://news.google.com/rss/search?q=Capgemini+consulting+strategy&hl=en-DE&gl=DE&ceid=DE:en",
+    "https://www.heise.de/newsticker/heise-atom.xml",
+    "https://www.tagesspiegel.de/rss",
+    "https://www.faz.net/rss/aktuell/",
+    "https://www.chip.de/rss",
+    "https://www.giga.de/rss",
+    "https://www.t-online.de/rss",
+    "https://www.express.de/rss",
 
-    # ZF
-    "https://news.google.com/rss/search?q=ZF+Group+automotive+strategy&hl=en-DE&gl=DE&ceid=DE:en",
+    "https://www.bitkom.org/service/rss-feed",
 
-    # =========================
-    # CLIENT DIRECT SOURCES
-    # =========================
-    "https://www.lbbw-am.de/news/",
-    "https://www.arbeitsagentur.de/presse",
-    "http://feeds.feedburner.com/BmwBlog",
-    "http://www.daimler.igm.de/feed/news.xml",
-    "https://news.eonenergy.com/news/",
-    "https://www.aldipresscentre.co.uk/",
-    "https://capgemini.com/feed",
-    "https://press.zf.com",
-
-    # =========================
-    # BACKUP BUSINESS SOURCES
-    # =========================
-    "https://feeds.reuters.com/reuters/businessNews",
-    "https://feeds.bbci.co.uk/news/business/rss.xml",
-    "https://www.handelsblatt.com/contentexport/feed/schlagzeilen",
-
-    # =========================
-    # LinkedIn
-    # =========================
-    "https://rss.app/rss-feed?url=https://www.linkedin.com/company/lbbw",
-    "https://rss.app/rss-feed?url=https://www.linkedin.com/company/bundesagentur-fuer-arbeit",
-    "https://rss.app/rss-feed?url=https://www.linkedin.com/company/bmw-group",
-    "https://rss.app/rss-feed?url=https://www.linkedin.com/company/daimler-truck-ag",
-    "https://rss.app/rss-feed?url=https://www.linkedin.com/company/eon",
-    "https://rss.app/rss-feed?url=https://www.linkedin.com/company/aldi",
-    "https://rss.app/rss-feed?url=https://www.linkedin.com/company/capgemini",
-    "https://rss.app/rss-feed?url=https://www.linkedin.com/company/zf-group"
+    "https://rss.app/feeds/SU0226316SotG2Ur.xml",
+    "https://rss.app/feeds/mIvPBhCGQ8s8bsfc.xml",
+    "https://rss.app/feeds/rbQ9pA1KN68TwFWE.xml",
+    "https://rss.app/feeds/w42SPeuQZ5xC3Lfb.xml",
+    "https://rss.app/feeds/QUeVxZ8GUKRvSwj9.xml"
 ]
 
-
-
-# =========================
 # KEYWORDS
-# =========================
-
 KEYWORDS = [
-    # =========================
-    # STRATEGY SIGNALS
-    # =========================
-    "strategy",
-    "strategic",
-    "plans",
-    "roadmap",
-    "transformation",
-    "restructuring",
-    "reorganization",
-    "expansion",
-    "growth",
-    "turnaround",
-
-    # =========================
-    # FINANCIAL / PERFORMANCE
-    # =========================
-    "cost",
-    "cost cuts",
-    "cost reduction",
-    "efficiency",
-    "profit",
-    "margin",
-    "earnings",
-    "revenue",
-    "performance",
-    "results",
-
-    # =========================
-    # OPERATIONS / BUSINESS
-    # =========================
-    "operations",
-    "supply chain",
-    "logistics",
-    "production",
-    "manufacturing",
-    "delivery",
-    "service",
-    "process",
-
-    # =========================
-    # DIGITAL / TRANSFORMATION
-    # =========================
-    "digital",
-    "technology",
-    "AI",
-    "automation",
-    "platform",
-    "innovation",
-
-    # =========================
-    # ORG / MANAGEMENT SIGNALS
-    # =========================
-    "CEO",
-    "management",
-    "leadership",
-    "organization",
-    "division",
-    "unit",
-
-    # =========================
-    # INDUSTRY SIGNALS
-    # =========================
-    "market",
-    "competition",
-    "industry",
-    "customers",
-    "demand",
-    "supply"
+    "eidas","eudi","wallet","digital identity","digitale identität",
+    "ozg","bsi","pki","age verification","altersverifikation",
+    "trust","credential","adoption","interoperability"
 ]
 
 # =========================

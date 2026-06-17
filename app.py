@@ -8,20 +8,17 @@ st.set_page_config(layout="wide")
 DATABASE_URL = os.getenv("DATABASE_URL")
 
 # =========================
-# CLIENT TOPICS
+# TOPICS
 # =========================
 
 TOPICS = {
-    "LBBW": ["bank", "strategy", "operating"],
-    "BA": ["labor", "public", "service"],
-    "BMW": ["mobility", "production"],
-    "Daimler Truck": ["logistics", "fleet"],
-    "E.ON": ["energy", "grid"],
-    "Aldi": ["retail", "pricing"],
-    "Capgemini": ["consulting", "ai"],
-    "ZF": ["automotive", "platform"],
+    "eIDAS / Regulation": ["eidas", "regulation", "trust services"],
+    "EUDI Wallet": ["wallet", "eudi", "digital identity wallet"],
+    "Age Verification": ["age verification", "altersverifikation"],
+    "Public Sector": ["ozg", "bsi", "bund", "government"],
+    "Security": ["pki", "encryption", "security"],
+    "Adoption & Usage": ["adoption", "usage", "activation"]
 }
-
 
 def assign_topic(title):
     t = title.lower()
@@ -52,7 +49,8 @@ last_update = last_update.strftime("%Y-%m-%d %H:%M")
 # UI
 # =========================
 
-st.title("📰 Enterprise Model and Strategy News Scanner")
+st.title("📰 Digital Identities News Scanner")
+st.caption("Curated insights on eIDAS, EUDI Wallet & Digital Identity")
 st.caption(f"Last ingestion run: {last_update}")
 
 selected_topics = st.sidebar.multiselect(
@@ -90,7 +88,7 @@ st.divider()
 # TOP ARTICLES
 # =========================
 
-st.subheader("🔥 Top Articles")
+st.subheader("🔥 Top 5 Articles")
 
 top_df = filtered.sort_values(by="score", ascending=False).head(5)
 
