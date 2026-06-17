@@ -260,6 +260,8 @@ st.divider()
 # ALL ARTICLES
 # =========================
 
+st.write("Filtered rows:", len(filtered))
+
 st.markdown("## 🗂️ All Articles")
 
 cols = st.columns(2)
