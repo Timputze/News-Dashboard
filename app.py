@@ -92,10 +92,18 @@ min_score = st.sidebar.slider(
     1
 )
 
+search_term = st.sidebar.text_input("Search (title or keywords)")
+
 filtered = df[
     (df["topic"].isin(selected_topics)) &
     (df["score"] >= min_score)
 ]
+
+if search_term:
+    filtered = filtered[
+        filtered["title"].str.contains(search_term, case=False, na=False) |
+        filtered["keywords"].str.contains(search_term, case=False, na=False)
+    ]
 
 # =========================
 # KPI
