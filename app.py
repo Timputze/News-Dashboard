@@ -1,6 +1,5 @@
 import streamlit as st
 from streamlit_extras.stylable_container import stylable_container
-st.write("works")
 import psycopg2
 import pandas as pd
 import os
@@ -105,7 +104,7 @@ min_score = st.sidebar.slider(
 search_term = st.sidebar.text_input("Search")
 
 st.sidebar.markdown("---")
-st.sidebar.caption("Auto-refresh every 5 min")
+st.sidebar.caption("Auto-refresh every morning")
 
 # =========================
 # FILTERING
@@ -141,13 +140,49 @@ with col3:
 st.caption("Score = number of keyword matches per article")
 st.divider()
 
+import plotly.express as px
+
+st.markdown("## 🧩 Topic Distribution")
+
+topic_counts = filtered["topic"].value_counts().reset_index()
+topic_counts.columns = ["topic", "count"]
+
+fig = px.pie(topic_counts, names="topic", values="count")
+
+fig.update_layout(
+    paper_bgcolor="rgba(0,0,0,0)",
+    plot_bgcolor="rgba(0,0,0,0)"
+)
+
+st.plotly_chart(fig, use_container_width=True)
+
+st.divider()
+
 # =========================
-# GLASS CARD FUNCTION
+# CARD FUNCTION
 # =========================
 
 import html
 
+def get_score_color(score):
+    if score >= 5:
+        return "#12B76A"
+    elif score >= 3:
+        return "#F79009"
+    else:
+        return "#F04438"
+
+
 def render_card(title, topic, source, score, link, keywords):
+
+    score_color = get_score_color(score)
+
+    # keyword tags
+    keywords_list = str(keywords).split(",")[:5]
+    tags = " ".join([
+        f"<span style='background:#1A1D24; padding:3px 8px; border-radius:8px; font-size:10px;'>{k.strip()}</span>"
+        for k in keywords_list
+    ])
 
     with stylable_container(
         key=f"card_{title}",
@@ -163,14 +198,44 @@ def render_card(title, topic, source, score, link, keywords):
     ):
         st.markdown(f"**{title}**")
 
-        # meta line
-        st.caption(f"{topic} • {source} • Score {score}")
+        # colored score
+        st.markdown(
+            f"{topic} • {source} • <span style='color:{score_color}; font-weight:600;'>Score {score}</span>",
+            unsafe_allow_html=True
+        )
 
-        # keywords (subtle)
-        st.caption(keywords)
+        # keyword tags
+        st.markdown(tags, unsafe_allow_html=True)
 
-        # button
         st.link_button("🔗 Open Article", link)
+
+# =========================
+# FEATURED ARTICLE
+# =========================
+
+if len(filtered) > 0:
+    top1 = filtered.sort_values(by="score", ascending=False).iloc[0]
+
+    st.markdown("## ⭐ Featured")
+
+    with stylable_container(
+        key="featured",
+        css_styles="""
+        {
+            background: linear-gradient(135deg, rgba(79,139,249,0.25), rgba(0,0,0,0.2));
+            border-radius: 18px;
+            padding: 24px;
+            border: 1px solid rgba(255,255,255,0.1);
+            margin-bottom: 20px;
+        }
+        """
+    ):
+        st.markdown(f"### {top1['title']}")
+        st.caption(f"{top1['topic']} • {top1['source']} • Score {top1['score']}")
+        st.caption(top1["keywords"])
+        st.link_button("🔗 Read Article", top1["link"])
+
+    st.divider()
 
 # =========================
 # TOP ARTICLES
@@ -199,12 +264,15 @@ st.divider()
 
 st.markdown("## 🗂️ All Articles")
 
-for _, row in filtered.iterrows():
-    render_card(
-        row["title"],
-        row["topic"],
-        row["source"],
-        row["score"],
-        row["link"],
-        row["keywords"]
-    )
+cols = st.columns(2)
+
+for i, (_, row) in enumerate(filtered.iterrows()):
+    with cols[i % 2]:
+        render_card(
+            row["title"],
+            row["topic"],
+            row["source"],
+            row["score"],
+            row["link"],
+            row["keywords"]
+        )
