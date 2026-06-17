@@ -49,12 +49,12 @@ last_update = last_update.strftime("%Y-%m-%d %H:%M")
 # UI
 # =========================
 
-st.title("📰 Digital Identities News Scanner")
+st.title("📰 Digital Identity News Scanner")
 st.caption("Curated insights on eIDAS, EUDI Wallet & Digital Identity")
 st.caption(f"Last ingestion run: {last_update}")
 
 selected_topics = st.sidebar.multiselect(
-    "Client",
+    "Topics",
     df["topic"].unique(),
     default=df["topic"].unique()
 )
