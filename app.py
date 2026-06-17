@@ -245,7 +245,7 @@ if len(filtered) > 0:
 # =========================
 
 st.markdown("## 🔥 Top Articles")
-st.caption("Highest relevance based on keyword density")
+st.caption("Highest relevance based on keywords found within the article")
 
 top_df = filtered.sort_values(by="score", ascending=False).head(5)
 
