@@ -14,10 +14,25 @@ CUTOFF_DATE = NOW - timedelta(days=CUTOFF_DAYS)
 CURRENT_YEAR = NOW.year
 
 RSS_FEEDS = [
-    "https://news.google.com/rss/search?q=eIDAS+Digital+Identity+Wallet&hl=en-DE&gl=DE&ceid=DE:en",
-    "https://news.google.com/rss/search?q=European+Digital+Identity+Wallet&hl=en-DE&gl=DE&ceid=DE:en",
-    "https://news.google.com/rss/search?q=digitale+Identit%C3%A4t+EU&hl=de&gl=DE&ceid=DE:de",
+    # =========================
+    # GOOGLE NEWS – GERMAN (BMDS CORE)
+    # =========================
+    "https://news.google.com/rss/search?q=eIDAS&hl=de&gl=DE&ceid=DE:de",
+    "https://news.google.com/rss/search?q=EUDI+Wallet&hl=de&gl=DE&ceid=DE:de",
+    "https://news.google.com/rss/search?q=digitale+Identität+EU&hl=de&gl=DE&ceid=DE:de",
+    "https://news.google.com/rss/search?q=Onlinezugangsgesetz+OZG&hl=de&gl=DE&ceid=DE:de",
+    "https://news.google.com/rss/search?q=Altersverifikation+digital&hl=de&gl=DE&ceid=DE:de",
+    "https://news.google.com/rss/search?q=BSI+IT-Sicherheit+Deutschland&hl=de&gl=DE&ceid=DE:de",
 
+    # =========================
+    # GOOGLE NEWS – ENGLISH (EU CONTEXT)
+    # =========================
+    "https://news.google.com/rss/search?q=European+Digital+Identity+Wallet&hl=en-DE&gl=DE&ceid=DE:en",
+    "https://news.google.com/rss/search?q=digital+identity+EU+regulation&hl=en-DE&gl=DE&ceid=DE:en",
+
+    # =========================
+    # ORIGINAL BMDS SOURCES
+    # =========================
     "https://digital-strategy.ec.europa.eu/en/news/rss.xml",
     "https://ec.europa.eu/commission/presscorner/api/rss?language=en",
     "https://www.enisa.europa.eu/newsroom/news/RSS",
@@ -27,20 +42,13 @@ RSS_FEEDS = [
     "https://www.bsi.bund.de/SiteGlobals/Functions/RSSFeed/RSSNews/RSSNews.xml",
     "https://www.bmwk.de/SiteGlobals/Functions/RSSFeed/RSSNews/RSSNews.xml",
 
-    "https://www.govtech.com/rss",
-    "https://www.oeffentliche-it.de/rss.xml",
-
-    "https://www.euractiv.com/section/digital/feed/",
-    "https://www.politico.eu/rss/digital/",
-    "https://www.politico.eu/rss/technology/",
-    "https://www.ft.com/europe?format=rss",
-
-    "https://www.darkreading.com/rss_simple.asp",
-    "https://www.infosecurity-magazine.com/rss/news/",
-
     "https://netzpolitik.org/feed/",
     "https://www.handelsblatt.com/contentexport/feed/inside-digital",
 
+    # =========================
+    # MISC. SOURCES
+    # =========================
+    "https://www.european-identity.com/rss",
     "https://www.heise.de/newsticker/heise-atom.xml",
     "https://www.tagesspiegel.de/rss",
     "https://www.faz.net/rss/aktuell/",
@@ -48,14 +56,12 @@ RSS_FEEDS = [
     "https://www.giga.de/rss",
     "https://www.t-online.de/rss",
     "https://www.express.de/rss",
-
     "https://www.bitkom.org/service/rss-feed",
 
-    "https://rss.app/feeds/SU0226316SotG2Ur.xml",
-    "https://rss.app/feeds/mIvPBhCGQ8s8bsfc.xml",
-    "https://rss.app/feeds/rbQ9pA1KN68TwFWE.xml",
-    "https://rss.app/feeds/w42SPeuQZ5xC3Lfb.xml",
-    "https://rss.app/feeds/QUeVxZ8GUKRvSwj9.xml"
+    # =========================
+    # LINKEDIN SOURCES
+    # =========================
+    "https://rss.app/feeds/SU0226316SotG2Ur.xml" # Official BMDS LinkedIn Page
 ]
 
 # KEYWORDS
