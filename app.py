@@ -173,7 +173,7 @@ def get_score_color(score):
         return "#F04438"
 
 
-def render_card(title, topic, source, score, link, keywords, idx):
+def render_card(title, topic, source, score, link, keywords, unique_id):
 
     score_color = get_score_color(score)
 
@@ -184,7 +184,7 @@ def render_card(title, topic, source, score, link, keywords, idx):
     ])
 
     with stylable_container(
-        key=f"card_{idx}",
+        key=f"card_{unique_id}",
         css_styles="""
         {
             background: linear-gradient(145deg, rgba(255,255,255,0.05), rgba(255,255,255,0.02));
@@ -264,14 +264,13 @@ st.markdown("## 🗂️ All Articles")
 
 cols = st.columns(2)
 
-for i, (_, row) in enumerate(filtered.iterrows()):
-    with cols[i % 2]:
-        render_card(
-            row["title"],
-            row["topic"],
-            row["source"],
-            row["score"],
-            row["link"],
-            row["keywords"],
-            i
-        )
+for _, row in top_df.iterrows():
+    render_card(
+        row["title"],
+        row["topic"],
+        row["source"],
+        row["score"],
+        row["link"],
+        row["keywords"],
+        row["link"]   
+    )
