@@ -264,7 +264,7 @@ st.divider()
 
 # DOWNLOAD BUTTON HERE
 st.download_button(
-    "📥 Download all articles",
+    "📥 Export articles",
     filtered.to_csv(index=False),
     file_name="BMI_news_articles.csv"
 )
