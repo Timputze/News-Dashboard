@@ -146,22 +146,29 @@ st.divider()
 # GLASS CARD FUNCTION
 # =========================
 
+import html
+
 def render_card(title, topic, source, score, link, keywords):
-    # Card container (HTML only for styling)
+    # escape all dynamic content
+    title = html.escape(str(title))
+    topic = html.escape(str(topic))
+    source = html.escape(str(source))
+    keywords = html.escape(str(keywords))
+
     st.markdown(f"""
     <div style="
         padding:18px;
         border-radius:14px;
         background: rgba(255,255,255,0.04);
         border: 1px solid rgba(255,255,255,0.08);
-        margin-bottom:8px;
+        margin-bottom:12px;
     ">
         <div style="font-size:16px; font-weight:600;">
             {title}
         </div>
 
         <div style="font-size:12px; opacity:0.7; margin-top:6px;">
-            {topic} • {source} • Score {score}
+            {topic} | {source} | Score {score}
         </div>
 
         <div style="font-size:12px; opacity:0.6; margin-top:6px;">
@@ -170,10 +177,8 @@ def render_card(title, topic, source, score, link, keywords):
     </div>
     """, unsafe_allow_html=True)
 
-    # ✅ SAFE clickable element (Streamlit native)
+    # keep link separate (stable)
     st.link_button("🔗 Open Article", link)
-
-    st.markdown(" ")
 
 # =========================
 # TOP ARTICLES
