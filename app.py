@@ -104,7 +104,7 @@ min_score = st.sidebar.slider(
 search_term = st.sidebar.text_input("Search")
 
 st.sidebar.markdown("---")
-st.sidebar.caption("Auto-refresh every morning")
+st.sidebar.caption("Auto-refreshes every morning")
 
 # =========================
 # FILTERING
@@ -260,19 +260,18 @@ st.divider()
 # ALL ARTICLES
 # =========================
 
-st.write("Filtered rows:", len(filtered))
-
 st.markdown("## 🗂️ All Articles")
 
 cols = st.columns(2)
 
-for _, row in top_df.iterrows():
-    render_card(
-        row["title"],
-        row["topic"],
-        row["source"],
-        row["score"],
-        row["link"],
-        row["keywords"],
-        row["link"]   
-    )
+for i, (_, row) in enumerate(filtered.iterrows()):
+    with cols[i % 2]:
+        render_card(
+            row["title"],
+            row["topic"],
+            row["source"],
+            row["score"],
+            row["link"],
+            row["keywords"],
+            row["link"]
+        )
