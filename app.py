@@ -3,6 +3,7 @@ from streamlit_extras.stylable_container import stylable_container
 import psycopg2
 import pandas as pd
 import os
+import plotly.express as px
 
 st.set_page_config(layout="wide")
 
@@ -79,7 +80,6 @@ colA.caption("Curated insights on eIDAS, EUDI Wallet & Digital Identity")
 colB.success("● Live")
 
 st.caption(f"Last ingestion run: {last_update}")
-
 st.markdown(" ")
 
 # =========================
@@ -140,7 +140,9 @@ with col3:
 st.caption("Score = number of keyword matches per article")
 st.divider()
 
-import plotly.express as px
+# =========================
+# CHART
+# =========================
 
 st.markdown("## 🧩 Topic Distribution")
 
@@ -162,8 +164,6 @@ st.divider()
 # CARD FUNCTION
 # =========================
 
-import html
-
 def get_score_color(score):
     if score >= 5:
         return "#12B76A"
@@ -173,11 +173,10 @@ def get_score_color(score):
         return "#F04438"
 
 
-def render_card(title, topic, source, score, link, keywords):
+def render_card(title, topic, source, score, link, keywords, idx):
 
     score_color = get_score_color(score)
 
-    # keyword tags
     keywords_list = str(keywords).split(",")[:5]
     tags = " ".join([
         f"<span style='background:#1A1D24; padding:3px 8px; border-radius:8px; font-size:10px;'>{k.strip()}</span>"
@@ -185,7 +184,7 @@ def render_card(title, topic, source, score, link, keywords):
     ])
 
     with stylable_container(
-        key=f"card_{title}",
+        key=f"card_{idx}",
         css_styles="""
         {
             background: linear-gradient(145deg, rgba(255,255,255,0.05), rgba(255,255,255,0.02));
@@ -198,13 +197,11 @@ def render_card(title, topic, source, score, link, keywords):
     ):
         st.markdown(f"**{title}**")
 
-        # colored score
         st.markdown(
             f"{topic} • {source} • <span style='color:{score_color}; font-weight:600;'>Score {score}</span>",
             unsafe_allow_html=True
         )
 
-        # keyword tags
         st.markdown(tags, unsafe_allow_html=True)
 
         st.link_button("🔗 Open Article", link)
@@ -246,14 +243,15 @@ st.caption("Highest relevance based on keyword density")
 
 top_df = filtered.sort_values(by="score", ascending=False).head(5)
 
-for _, row in top_df.iterrows():
+for i, (_, row) in enumerate(top_df.iterrows()):
     render_card(
         row["title"],
         row["topic"],
         row["source"],
         row["score"],
         row["link"],
-        row["keywords"]
+        row["keywords"],
+        i
     )
 
 st.divider()
@@ -274,5 +272,6 @@ for i, (_, row) in enumerate(filtered.iterrows()):
             row["source"],
             row["score"],
             row["link"],
-            row["keywords"]
+            row["keywords"],
+            i
         )
