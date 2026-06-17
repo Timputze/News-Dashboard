@@ -1,4 +1,6 @@
 import streamlit as st
+from streamlit_extras.stylable_container import stylable_container
+st.write("works")
 import psycopg2
 import pandas as pd
 import os
@@ -72,11 +74,12 @@ last_update = df["load_timestamp"].max().strftime("%Y-%m-%d %H:%M")
 # =========================
 
 st.title("📰 Digital Identity News Scanner")
-st.caption("Curated insights on eIDAS, EUDI Wallet & Digital Identity")
 
 colA, colB = st.columns([3, 1])
-colA.caption(f"Last ingestion run: {last_update}")
+colA.caption("Curated insights on eIDAS, EUDI Wallet & Digital Identity")
 colB.success("● Live")
+
+st.caption(f"Last ingestion run: {last_update}")
 
 st.markdown(" ")
 
@@ -120,26 +123,22 @@ if search_term:
     ]
 
 # =========================
-# KPI (cleaner style)
+# KPIs 
 # =========================
 
 col1, col2, col3 = st.columns(3)
 
 with col1:
-    st.markdown("### 📰 Articles")
-    st.markdown(f"## {len(filtered)}")
+    st.metric("Articles", len(filtered))
 
 with col2:
-    st.markdown("### 🧩 Topics")
-    st.markdown(f"## {filtered['topic'].nunique()}")
+    st.metric("Topics", filtered["topic"].nunique())
 
 with col3:
-    st.markdown("### ⭐ Avg Score")
     avg_score = round(filtered["score"].mean(), 1) if len(filtered) > 0 else 0
-    st.markdown(f"## {avg_score}")
+    st.metric("Avg Score", avg_score)
 
 st.caption("Score = number of keyword matches per article")
-
 st.divider()
 
 # =========================
@@ -149,36 +148,29 @@ st.divider()
 import html
 
 def render_card(title, topic, source, score, link, keywords):
-    # escape all dynamic content
-    title = html.escape(str(title))
-    topic = html.escape(str(topic))
-    source = html.escape(str(source))
-    keywords = html.escape(str(keywords))
 
-    st.markdown(f"""
-    <div style="
-        padding:18px;
-        border-radius:14px;
-        background: rgba(255,255,255,0.04);
-        border: 1px solid rgba(255,255,255,0.08);
-        margin-bottom:12px;
-    ">
-        <div style="font-size:16px; font-weight:600;">
-            {title}
-        </div>
+    with stylable_container(
+        key=f"card_{title}",
+        css_styles="""
+        {
+            background: linear-gradient(145deg, rgba(255,255,255,0.05), rgba(255,255,255,0.02));
+            border-radius: 16px;
+            padding: 18px;
+            border: 1px solid rgba(255,255,255,0.08);
+            margin-bottom: 12px;
+        }
+        """
+    ):
+        st.markdown(f"**{title}**")
 
-        <div style="font-size:12px; opacity:0.7; margin-top:6px;">
-            {topic} | {source} | Score {score}
-        </div>
+        # meta line
+        st.caption(f"{topic} • {source} • Score {score}")
 
-        <div style="font-size:12px; opacity:0.6; margin-top:6px;">
-            {keywords}
-        </div>
-    </div>
-    """, unsafe_allow_html=True)
+        # keywords (subtle)
+        st.caption(keywords)
 
-    # keep link separate (stable)
-    st.link_button("🔗 Open Article", link)
+        # button
+        st.link_button("🔗 Open Article", link)
 
 # =========================
 # TOP ARTICLES
