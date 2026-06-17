@@ -66,70 +66,26 @@ RSS_FEEDS = [
 
 # KEYWORDS
 KEYWORDS = [
-    # =========================
-    # CORE DIGITAL IDENTITY
-    # =========================
     "eidas",
     "eudi",
-    "wallet",
+    "eudi wallet",
     "digital identity",
     "digitale identität",
     "identity wallet",
-    "digitale brieftasche",
 
-    # =========================
-    # PUBLIC SECTOR / GOV
-    # =========================
-    "ozg",
     "onlinezugangsgesetz",
+    "ozg",
     "bsi",
-    "bund",
-    "regierung",
-    "ministerium",
-    "verwaltung",
-    "behörde",
     "registermodernisierung",
 
-    # =========================
-    # SECURITY
-    # =========================
-    "pki",
-    "security",
-    "cybersecurity",
-    "verschlüsselung",
-    "it-sicherheit",
-
-    # =========================
-    # AGE / ID USE CASES
-    # =========================
-    "age verification",
     "altersverifikation",
-    "altersprüfung",
+    "age verification",
 
-    # =========================
-    # REAL NEWS LANGUAGE
-    # =========================
-    "einführung",
-    "rollout",
-    "strategie",
-    "initiative",
-    "projekt",
-    "digitalisierung",
-    "plattform",
-    "lösung",
-    "system",
-    "anwendung",
-
-    # =========================
-    # ADOPTION SIGNALS
-    # =========================
-    "nutzung",
-    "akzeptanz",
-    "verbreitung",
-    "launch",
-    "start",
-    "pilot"
+    "trust services",
+    "verifiable credentials",
+    "electronic identity"
 ]
+
 
 # =========================
 # HELPERS
@@ -141,9 +97,14 @@ def is_en_or_de(text):
     except:
         return True
 
-def relevance_score(text):
+def extract_keywords(text):
     text = text.lower()
-    return sum(text.count(k) for k in KEYWORDS)
+    found = [k for k in KEYWORDS if k in text]
+    return found
+
+def relevance_score(found_keywords):
+    return len(found_keywords)
+
 
 def extract_published_datetime(entry):
     if entry.get("published_parsed"):
@@ -169,8 +130,10 @@ for feed_url in RSS_FEEDS:
         if not is_en_or_de(text):
             continue
 
-        score = relevance_score(text)
-        if score == 0:
+        found_keywords = extract_keywords(text)
+        score = relevance_score(found_keywords)
+
+        if score < 2:
             continue
 
         published_at = extract_published_datetime(entry)
@@ -188,9 +151,11 @@ for feed_url in RSS_FEEDS:
             "link": entry.get("link", ""),
             "source": feed.feed.get("title", "Unknown"),
             "score": score,
+            "keywords": ", ".join(found_keywords),   # ✅ NEW
             "published_at": published_at,
             "load_timestamp": NOW
         })
+
 
 # =========================
 # DB WRITE
@@ -206,6 +171,7 @@ with psycopg.connect(DATABASE_URL) as conn:
                 link TEXT UNIQUE,
                 source TEXT,
                 score INT,
+                keywords TEXT,
                 published_at TIMESTAMP NOT NULL,
                 load_timestamp TIMESTAMP
             )
@@ -223,12 +189,12 @@ with psycopg.connect(DATABASE_URL) as conn:
         for a in articles:
             cur.execute("""
                 INSERT INTO news_articles
-                (title, link, source, score, published_at, load_timestamp)
-                VALUES (%s, %s, %s, %s, %s, %s)
+                (title, link, source, score, keywords, published_at, load_timestamp)
+                VALUES (%s, %s, %s, %s, %s, %s, %s)
                 ON CONFLICT (link) DO NOTHING
             """, (
                 a["title"], a["link"], a["source"],
-                a["score"], a["published_at"], a["load_timestamp"]
+                a["score"], a["keywords"], a["published_at"], a["load_timestamp"]
             ))
 
             if cur.rowcount > 0:

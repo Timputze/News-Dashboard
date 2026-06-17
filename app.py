@@ -121,6 +121,7 @@ top_df = filtered.sort_values(by="score", ascending=False).head(5)
 for _, row in top_df.iterrows():
     st.markdown(f"**{row['title']}**")
     st.caption(f"{row['topic']} | {row['source']} | Score {row['score']}")
+    st.caption(f"Keywords: {row['keywords']}")
     st.link_button("Open", row["link"])
     st.divider()
 
