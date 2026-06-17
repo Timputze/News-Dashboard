@@ -130,9 +130,11 @@ for feed_url in RSS_FEEDS:
         if not is_en_or_de(text):
             continue
 
+        # keyword extraction
         found_keywords = extract_keywords(text)
         score = relevance_score(found_keywords)
 
+        # filter weak matches
         if score < 2:
             continue
 
@@ -140,6 +142,7 @@ for feed_url in RSS_FEEDS:
         if not published_at:
             continue
 
+        # correct operator
         if published_at < CUTOFF_DATE:
             continue
 
@@ -151,11 +154,10 @@ for feed_url in RSS_FEEDS:
             "link": entry.get("link", ""),
             "source": feed.feed.get("title", "Unknown"),
             "score": score,
-            "keywords": ", ".join(found_keywords),   # ✅ NEW
+            "keywords": ", ".join(found_keywords),
             "published_at": published_at,
             "load_timestamp": NOW
         })
-
 
 # =========================
 # DB WRITE
