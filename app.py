@@ -48,9 +48,9 @@ TOPICS = {
 
 def assign_topic(title):
     t = title.lower()
-    for client, keywords in TOPICS.items():
+    for topic, keywords in TOPICS.items():
         if any(k in t for k in keywords):
-            return client
+            return topic
     return "Other"
 
 
@@ -111,7 +111,7 @@ if search_term:
 
 col1, col2, col3 = st.columns(3)
 col1.metric("Articles", len(filtered))
-col2.metric("Clients", filtered["topic"].nunique())
+col2.metric("Topics", filtered["topic"].nunique())
 col3.metric("Average Score", round(filtered["score"].mean(), 1))
 
 st.caption("Score is the amount of keywords found per article.")
