@@ -145,6 +145,16 @@ with col3:
 
 st.caption("Score = number of keyword matches per article")
 st.divider()
+st.markdown("## 🧠 Executive Summary")
+
+top_topic = filtered["topic"].value_counts().idxmax()
+top_source = filtered["source"].value_counts().idxmax()
+
+st.info(f"""
+• Most activity in **{top_topic}**  
+• Key source: **{top_source}**  
+• {len(filtered)} relevant articles identified  
+""")
 
 # =========================
 # CHART
