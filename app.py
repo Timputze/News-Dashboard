@@ -262,6 +262,13 @@ for i, (_, row) in enumerate(top_df.iterrows()):
 
 st.divider()
 
+# DOWNLOAD BUTTON HERE
+st.download_button(
+    "📥 Download filtered articles",
+    filtered.to_csv(index=False),
+    file_name="articles.csv"
+)
+
 # =========================
 # ALL ARTICLES
 # =========================
