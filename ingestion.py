@@ -60,9 +60,69 @@ RSS_FEEDS = [
 
 # KEYWORDS
 KEYWORDS = [
-    "eidas","eudi","wallet","digital identity","digitale identität",
-    "ozg","bsi","pki","age verification","altersverifikation",
-    "trust","credential","adoption","interoperability"
+    # =========================
+    # CORE DIGITAL IDENTITY
+    # =========================
+    "eidas",
+    "eudi",
+    "wallet",
+    "digital identity",
+    "digitale identität",
+    "identity wallet",
+    "digitale brieftasche",
+
+    # =========================
+    # PUBLIC SECTOR / GOV
+    # =========================
+    "ozg",
+    "onlinezugangsgesetz",
+    "bsi",
+    "bund",
+    "regierung",
+    "ministerium",
+    "verwaltung",
+    "behörde",
+    "registermodernisierung",
+
+    # =========================
+    # SECURITY
+    # =========================
+    "pki",
+    "security",
+    "cybersecurity",
+    "verschlüsselung",
+    "it-sicherheit",
+
+    # =========================
+    # AGE / ID USE CASES
+    # =========================
+    "age verification",
+    "altersverifikation",
+    "altersprüfung",
+
+    # =========================
+    # REAL NEWS LANGUAGE
+    # =========================
+    "einführung",
+    "rollout",
+    "strategie",
+    "initiative",
+    "projekt",
+    "digitalisierung",
+    "plattform",
+    "lösung",
+    "system",
+    "anwendung",
+
+    # =========================
+    # ADOPTION SIGNALS
+    # =========================
+    "nutzung",
+    "akzeptanz",
+    "verbreitung",
+    "launch",
+    "start",
+    "pilot"
 ]
 
 # =========================

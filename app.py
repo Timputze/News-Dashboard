@@ -12,12 +12,38 @@ DATABASE_URL = os.getenv("DATABASE_URL")
 # =========================
 
 TOPICS = {
-    "eIDAS / Regulation": ["eidas", "regulation", "trust services"],
-    "EUDI Wallet": ["wallet", "eudi", "digital identity wallet"],
-    "Age Verification": ["age verification", "altersverifikation"],
-    "Public Sector": ["ozg", "bsi", "bund", "government"],
-    "Security": ["pki", "encryption", "security"],
-    "Adoption & Usage": ["adoption", "usage", "activation"]
+    "eIDAS / Regulation": [
+        "eidas", "regulation", "trust services",
+        "verordnung", "eu-verordnung", "digitale identität eu"
+    ],
+
+    "EUDI Wallet": [
+        "wallet", "eudi", "digital identity wallet",
+        "digitale brieftasche", "eudi wallet", "identity wallet"
+    ],
+
+    "Age Verification": [
+        "age verification", "altersverifikation",
+        "altersprüfung", "jugendschutz"
+    ],
+
+    "Public Sector": [
+        "ozg", "bsi", "bund", "government",
+        "verwaltung", "behörde", "ministerium",
+        "onlinezugangsgesetz", "registermodernisierung"
+    ],
+
+    "Security": [
+        "pki", "encryption", "security",
+        "sicherheit", "verschlüsselung",
+        "cybersecurity", "it-sicherheit"
+    ],
+
+    "Adoption & Usage": [
+        "adoption", "usage", "activation",
+        "nutzung", "einführung", "verbreitung",
+        "akzeptanz", "rollout"
+    ]
 }
 
 def assign_topic(title):
