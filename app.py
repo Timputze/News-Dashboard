@@ -6,7 +6,7 @@ import os
 import plotly.express as px
 
 st.set_page_config(
-    page_title="BMI News Scanner",
+    page_title="Digital Identities News Scanner",
     page_icon="📰",
     layout="wide"
 )
