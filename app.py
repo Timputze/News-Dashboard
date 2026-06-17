@@ -5,6 +5,12 @@ import pandas as pd
 import os
 import plotly.express as px
 
+st.set_page_config(
+    page_title="DI News Scanner",
+    page_icon="🔥",
+    layout="wide"
+)
+
 st.set_page_config(layout="wide")
 
 DATABASE_URL = os.getenv("DATABASE_URL")
