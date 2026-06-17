@@ -66,26 +66,155 @@ RSS_FEEDS = [
 
 # KEYWORDS
 KEYWORDS = [
+    # =========================
+    # CORE EUDI / eIDAS
+    # =========================
     "eidas",
+    "eidas 2.0",
     "eudi",
     "eudi wallet",
+    "european digital identity",
     "digital identity",
     "digitale identität",
     "identity wallet",
+    "digitale brieftasche",
 
-    "onlinezugangsgesetz",
+    # =========================
+    # IDENTITY / PID
+    # =========================
+    "pid",
+    "personal identification data",
+    "identity data",
+    "identitätsdaten",
+    "identitätsnachweis",
+    "identity verification",
+    "identitätsprüfung",
+    "identifizierung",
+
+    # =========================
+    # CREDENTIALS / ATTRIBUTES
+    # =========================
+    "verifiable credentials",
+    "verifiable credential",
+    "credentials",
+    "credential",
+    "nachweis",
+    "digitale nachweise",
+    "elektronische nachweise",
+    "electronic attestation",
+    "electronic attestations of attributes",
+    "attribut",
+    "attribute",
+    "attributsnachweis",
+    "attribute certificate",
+    "electronic attribute",
+    "qualified electronic attestation",
+    "qeaa",
+    "eaa",
+
+    # =========================
+    # TRUST / REGULATION
+    # =========================
+    "trust services",
+    "trust framework",
+    "vertrauensdienste",
+    "vertrauensrahmen",
+    "regulation",
+    "verordnung",
+    "eu regulation",
+    "eidas regulation",
+
+    # =========================
+    # ECOSYSTEM ROLES
+    # =========================
+    "relying party",
+    "issuer",
+    "verifier",
+    "wallet holder",
+    "credential issuer",
+    "credential verifier",
+    "aussteller",
+    "prüfer",
+    "verifizierer",
+
+    # =========================
+    # AUTH / SECURITY
+    # =========================
+    "authentication",
+    "authentifizierung",
+    "strong authentication",
+    "starke authentifizierung",
+    "cryptographic",
+    "cryptographically secured",
+    "kryptografisch",
+    "verschlüsselt",
+    "encryption",
+    "verschlüsselung",
+    "pki",
+    "it-sicherheit",
+    "cybersecurity",
+
+    # =========================
+    # GOVERNANCE / PROCESS
+    # =========================
+    "registration",
+    "registrierung",
+    "certificate",
+    "zertifikat",
+    "access certificate",
+    "zugangszertifikat",
+    "registration certificate",
+    "registrierungszertifikat",
+    "consent",
+    "zustimmung",
+    "auditability",
+    "nachvollziehbarkeit",
+    "data minimisation",
+    "datensparsamkeit",
+    "governance",
+
+    # =========================
+    # USE CASE / PROCESS LANGUAGE
+    # =========================
+    "onboarding",
+    "digital onboarding",
+    "verifizierung",
+    "verification",
+    "proof",
+    "evidence",
+    "nachweis",
+    "reuse",
+    "wiederverwendung",
+    "cross-border",
+    "grenzüberschreitend",
+    "interoperability",
+    "interoperabilität",
+
+    # =========================
+    # PUBLIC SECTOR (GERMANY)
+    # =========================
     "ozg",
+    "onlinezugangsgesetz",
     "bsi",
+    "bund",
+    "regierung",
+    "verwaltung",
+    "behörde",
+    "ministerium",
     "registermodernisierung",
 
+    # =========================
+    # ORG / INITIATIVES
+    # =========================
+    "bitkom",
+    "sprind",
+
+    # =========================
+    # AGE / USE CASES
+    # =========================
     "altersverifikation",
-    "age verification",
-
-    "trust services",
-    "verifiable credentials",
-    "electronic identity"
+    "age verification"
 ]
-
 
 # =========================
 # HELPERS
