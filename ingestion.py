@@ -64,7 +64,7 @@ RSS_FEEDS = [
     "https://rss.app/feeds/SU0226316SotG2Ur.xml" # Official BMDS LinkedIn Page
 ]
 
-# KEYWORDS
+# KEYWORD
 KEYWORDS = [
     # =========================
     # CORE EUDI / eIDAS
